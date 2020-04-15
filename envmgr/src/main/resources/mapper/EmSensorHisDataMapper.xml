@@ -1,0 +1,415 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.EmSensorHisDataMapper" >
+  <resultMap id="BaseResultMap" type="com.pojo.EmSensorHisData" >
+    <id column="DATA_ID" property="dataId" jdbcType="BIGINT" />
+    <result column="DATA_TIME" property="dataTime" jdbcType="TIMESTAMP" />
+    <result column="SENSOR_ID" property="sensorId" jdbcType="VARCHAR" />
+    <result column="PM25" property="pm25" jdbcType="NUMERIC" />
+    <result column="PM10" property="pm10" jdbcType="NUMERIC" />
+    <result column="SO2" property="so2" jdbcType="NUMERIC" />
+    <result column="NO2" property="no2" jdbcType="NUMERIC" />
+    <result column="O3" property="o3" jdbcType="NUMERIC" />
+    <result column="CO" property="co" jdbcType="NUMERIC" />
+    <result column="TSP" property="tsp" jdbcType="NUMERIC" />
+    <result column="TP" property="tp" jdbcType="NUMERIC" />
+    <result column="MT" property="mt" jdbcType="NUMERIC" />
+    <result column="VO1" property="vo1" jdbcType="NUMERIC" />
+    <result column="VO2" property="vo2" jdbcType="NUMERIC" />
+    <result column="WIND_PRESS" property="windPress" jdbcType="NUMERIC" />
+    <result column="WIND_DIRECTION" property="windDirection" jdbcType="VARCHAR" />
+    <result column="WIND_FORCE" property="windForce" jdbcType="NUMERIC" />
+    <result column="NOISE" property="noise" jdbcType="NUMERIC" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    DATA_ID, DATA_TIME, SENSOR_ID, PM25, PM10, SO2, NO2, O3, CO, TSP, TP, MT, VO1, VO2, 
+    WIND_PRESS, WIND_DIRECTION, WIND_FORCE, NOISE
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pojo.EmSensorHisDataExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from EM_SENSOR_HIS_DATA
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from EM_SENSOR_HIS_DATA
+    where DATA_ID = #{dataId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from EM_SENSOR_HIS_DATA
+    where DATA_ID = #{dataId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pojo.EmSensorHisDataExample" >
+    delete from EM_SENSOR_HIS_DATA
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pojo.EmSensorHisData" >
+    insert into EM_SENSOR_HIS_DATA (DATA_ID, DATA_TIME, SENSOR_ID, 
+      PM25, PM10, SO2, NO2, 
+      O3, CO, TSP, TP, 
+      MT, VO1, VO2, WIND_PRESS, 
+      WIND_DIRECTION, WIND_FORCE, NOISE
+      )
+    values (#{dataId,jdbcType=BIGINT}, #{dataTime,jdbcType=TIMESTAMP}, #{sensorId,jdbcType=VARCHAR}, 
+      #{pm25,jdbcType=NUMERIC}, #{pm10,jdbcType=NUMERIC}, #{so2,jdbcType=NUMERIC}, #{no2,jdbcType=NUMERIC}, 
+      #{o3,jdbcType=NUMERIC}, #{co,jdbcType=NUMERIC}, #{tsp,jdbcType=NUMERIC}, #{tp,jdbcType=NUMERIC}, 
+      #{mt,jdbcType=NUMERIC}, #{vo1,jdbcType=NUMERIC}, #{vo2,jdbcType=NUMERIC}, #{windPress,jdbcType=NUMERIC}, 
+      #{windDirection,jdbcType=VARCHAR}, #{windForce,jdbcType=NUMERIC}, #{noise,jdbcType=NUMERIC}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.pojo.EmSensorHisData" >
+    insert into EM_SENSOR_HIS_DATA
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="dataId != null" >
+        DATA_ID,
+      </if>
+      <if test="dataTime != null" >
+        DATA_TIME,
+      </if>
+      <if test="sensorId != null" >
+        SENSOR_ID,
+      </if>
+      <if test="pm25 != null" >
+        PM25,
+      </if>
+      <if test="pm10 != null" >
+        PM10,
+      </if>
+      <if test="so2 != null" >
+        SO2,
+      </if>
+      <if test="no2 != null" >
+        NO2,
+      </if>
+      <if test="o3 != null" >
+        O3,
+      </if>
+      <if test="co != null" >
+        CO,
+      </if>
+      <if test="tsp != null" >
+        TSP,
+      </if>
+      <if test="tp != null" >
+        TP,
+      </if>
+      <if test="mt != null" >
+        MT,
+      </if>
+      <if test="vo1 != null" >
+        VO1,
+      </if>
+      <if test="vo2 != null" >
+        VO2,
+      </if>
+      <if test="windPress != null" >
+        WIND_PRESS,
+      </if>
+      <if test="windDirection != null" >
+        WIND_DIRECTION,
+      </if>
+      <if test="windForce != null" >
+        WIND_FORCE,
+      </if>
+      <if test="noise != null" >
+        NOISE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="dataId != null" >
+        #{dataId,jdbcType=BIGINT},
+      </if>
+      <if test="dataTime != null" >
+        #{dataTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sensorId != null" >
+        #{sensorId,jdbcType=VARCHAR},
+      </if>
+      <if test="pm25 != null" >
+        #{pm25,jdbcType=NUMERIC},
+      </if>
+      <if test="pm10 != null" >
+        #{pm10,jdbcType=NUMERIC},
+      </if>
+      <if test="so2 != null" >
+        #{so2,jdbcType=NUMERIC},
+      </if>
+      <if test="no2 != null" >
+        #{no2,jdbcType=NUMERIC},
+      </if>
+      <if test="o3 != null" >
+        #{o3,jdbcType=NUMERIC},
+      </if>
+      <if test="co != null" >
+        #{co,jdbcType=NUMERIC},
+      </if>
+      <if test="tsp != null" >
+        #{tsp,jdbcType=NUMERIC},
+      </if>
+      <if test="tp != null" >
+        #{tp,jdbcType=NUMERIC},
+      </if>
+      <if test="mt != null" >
+        #{mt,jdbcType=NUMERIC},
+      </if>
+      <if test="vo1 != null" >
+        #{vo1,jdbcType=NUMERIC},
+      </if>
+      <if test="vo2 != null" >
+        #{vo2,jdbcType=NUMERIC},
+      </if>
+      <if test="windPress != null" >
+        #{windPress,jdbcType=NUMERIC},
+      </if>
+      <if test="windDirection != null" >
+        #{windDirection,jdbcType=VARCHAR},
+      </if>
+      <if test="windForce != null" >
+        #{windForce,jdbcType=NUMERIC},
+      </if>
+      <if test="noise != null" >
+        #{noise,jdbcType=NUMERIC},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pojo.EmSensorHisDataExample" resultType="java.lang.Integer" >
+    select count(*) from EM_SENSOR_HIS_DATA
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update EM_SENSOR_HIS_DATA
+    <set >
+      <if test="record.dataId != null" >
+        DATA_ID = #{record.dataId,jdbcType=BIGINT},
+      </if>
+      <if test="record.dataTime != null" >
+        DATA_TIME = #{record.dataTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.sensorId != null" >
+        SENSOR_ID = #{record.sensorId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pm25 != null" >
+        PM25 = #{record.pm25,jdbcType=NUMERIC},
+      </if>
+      <if test="record.pm10 != null" >
+        PM10 = #{record.pm10,jdbcType=NUMERIC},
+      </if>
+      <if test="record.so2 != null" >
+        SO2 = #{record.so2,jdbcType=NUMERIC},
+      </if>
+      <if test="record.no2 != null" >
+        NO2 = #{record.no2,jdbcType=NUMERIC},
+      </if>
+      <if test="record.o3 != null" >
+        O3 = #{record.o3,jdbcType=NUMERIC},
+      </if>
+      <if test="record.co != null" >
+        CO = #{record.co,jdbcType=NUMERIC},
+      </if>
+      <if test="record.tsp != null" >
+        TSP = #{record.tsp,jdbcType=NUMERIC},
+      </if>
+      <if test="record.tp != null" >
+        TP = #{record.tp,jdbcType=NUMERIC},
+      </if>
+      <if test="record.mt != null" >
+        MT = #{record.mt,jdbcType=NUMERIC},
+      </if>
+      <if test="record.vo1 != null" >
+        VO1 = #{record.vo1,jdbcType=NUMERIC},
+      </if>
+      <if test="record.vo2 != null" >
+        VO2 = #{record.vo2,jdbcType=NUMERIC},
+      </if>
+      <if test="record.windPress != null" >
+        WIND_PRESS = #{record.windPress,jdbcType=NUMERIC},
+      </if>
+      <if test="record.windDirection != null" >
+        WIND_DIRECTION = #{record.windDirection,jdbcType=VARCHAR},
+      </if>
+      <if test="record.windForce != null" >
+        WIND_FORCE = #{record.windForce,jdbcType=NUMERIC},
+      </if>
+      <if test="record.noise != null" >
+        NOISE = #{record.noise,jdbcType=NUMERIC},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update EM_SENSOR_HIS_DATA
+    set DATA_ID = #{record.dataId,jdbcType=BIGINT},
+      DATA_TIME = #{record.dataTime,jdbcType=TIMESTAMP},
+      SENSOR_ID = #{record.sensorId,jdbcType=VARCHAR},
+      PM25 = #{record.pm25,jdbcType=NUMERIC},
+      PM10 = #{record.pm10,jdbcType=NUMERIC},
+      SO2 = #{record.so2,jdbcType=NUMERIC},
+      NO2 = #{record.no2,jdbcType=NUMERIC},
+      O3 = #{record.o3,jdbcType=NUMERIC},
+      CO = #{record.co,jdbcType=NUMERIC},
+      TSP = #{record.tsp,jdbcType=NUMERIC},
+      TP = #{record.tp,jdbcType=NUMERIC},
+      MT = #{record.mt,jdbcType=NUMERIC},
+      VO1 = #{record.vo1,jdbcType=NUMERIC},
+      VO2 = #{record.vo2,jdbcType=NUMERIC},
+      WIND_PRESS = #{record.windPress,jdbcType=NUMERIC},
+      WIND_DIRECTION = #{record.windDirection,jdbcType=VARCHAR},
+      WIND_FORCE = #{record.windForce,jdbcType=NUMERIC},
+      NOISE = #{record.noise,jdbcType=NUMERIC}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pojo.EmSensorHisData" >
+    update EM_SENSOR_HIS_DATA
+    <set >
+      <if test="dataTime != null" >
+        DATA_TIME = #{dataTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sensorId != null" >
+        SENSOR_ID = #{sensorId,jdbcType=VARCHAR},
+      </if>
+      <if test="pm25 != null" >
+        PM25 = #{pm25,jdbcType=NUMERIC},
+      </if>
+      <if test="pm10 != null" >
+        PM10 = #{pm10,jdbcType=NUMERIC},
+      </if>
+      <if test="so2 != null" >
+        SO2 = #{so2,jdbcType=NUMERIC},
+      </if>
+      <if test="no2 != null" >
+        NO2 = #{no2,jdbcType=NUMERIC},
+      </if>
+      <if test="o3 != null" >
+        O3 = #{o3,jdbcType=NUMERIC},
+      </if>
+      <if test="co != null" >
+        CO = #{co,jdbcType=NUMERIC},
+      </if>
+      <if test="tsp != null" >
+        TSP = #{tsp,jdbcType=NUMERIC},
+      </if>
+      <if test="tp != null" >
+        TP = #{tp,jdbcType=NUMERIC},
+      </if>
+      <if test="mt != null" >
+        MT = #{mt,jdbcType=NUMERIC},
+      </if>
+      <if test="vo1 != null" >
+        VO1 = #{vo1,jdbcType=NUMERIC},
+      </if>
+      <if test="vo2 != null" >
+        VO2 = #{vo2,jdbcType=NUMERIC},
+      </if>
+      <if test="windPress != null" >
+        WIND_PRESS = #{windPress,jdbcType=NUMERIC},
+      </if>
+      <if test="windDirection != null" >
+        WIND_DIRECTION = #{windDirection,jdbcType=VARCHAR},
+      </if>
+      <if test="windForce != null" >
+        WIND_FORCE = #{windForce,jdbcType=NUMERIC},
+      </if>
+      <if test="noise != null" >
+        NOISE = #{noise,jdbcType=NUMERIC},
+      </if>
+    </set>
+    where DATA_ID = #{dataId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pojo.EmSensorHisData" >
+    update EM_SENSOR_HIS_DATA
+    set DATA_TIME = #{dataTime,jdbcType=TIMESTAMP},
+      SENSOR_ID = #{sensorId,jdbcType=VARCHAR},
+      PM25 = #{pm25,jdbcType=NUMERIC},
+      PM10 = #{pm10,jdbcType=NUMERIC},
+      SO2 = #{so2,jdbcType=NUMERIC},
+      NO2 = #{no2,jdbcType=NUMERIC},
+      O3 = #{o3,jdbcType=NUMERIC},
+      CO = #{co,jdbcType=NUMERIC},
+      TSP = #{tsp,jdbcType=NUMERIC},
+      TP = #{tp,jdbcType=NUMERIC},
+      MT = #{mt,jdbcType=NUMERIC},
+      VO1 = #{vo1,jdbcType=NUMERIC},
+      VO2 = #{vo2,jdbcType=NUMERIC},
+      WIND_PRESS = #{windPress,jdbcType=NUMERIC},
+      WIND_DIRECTION = #{windDirection,jdbcType=VARCHAR},
+      WIND_FORCE = #{windForce,jdbcType=NUMERIC},
+      NOISE = #{noise,jdbcType=NUMERIC}
+    where DATA_ID = #{dataId,jdbcType=BIGINT}
+  </update>
+</mapper>
